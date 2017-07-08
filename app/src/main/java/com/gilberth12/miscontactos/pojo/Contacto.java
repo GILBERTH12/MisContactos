@@ -1,4 +1,4 @@
-package com.gilberth12.miscontactos;
+package com.gilberth12.miscontactos.pojo;
 
 /**
  * Created by Win 10 on 18/06/2017.

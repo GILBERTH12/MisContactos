@@ -1,30 +1,46 @@
 package com.gilberth12.miscontactos;
 
-import android.content.Intent;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+
+import com.gilberth12.miscontactos.adapter.ContactoAdaptador;
+import com.gilberth12.miscontactos.adapter.PageAdapter;
+import com.gilberth12.miscontactos.fragment.PerfilFragment;
+import com.gilberth12.miscontactos.fragment.RecyclerViewFragment;
+import com.gilberth12.miscontactos.pojo.Contacto;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<Contacto> contactos;
-    private RecyclerView rvContactos;
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+
+        setUpViewPager();
+
+        if (toolbar != null){
+            setSupportActionBar(toolbar);
+        }
+/*
         Toolbar miActionBar = (Toolbar) findViewById(R.id.miActionBar);
         setSupportActionBar(miActionBar);
+        */
 
 /*
         contactos = new ArrayList<Contacto>();
@@ -38,16 +54,6 @@ public class MainActivity extends AppCompatActivity {
         for (Contacto contacto : contactos){
             nombresContacto.add(contacto.getNombre());
         }*/
-
-        rvContactos = (RecyclerView) findViewById(R.id.rvContactos);
-
-        /*GridLayoutManager glm = new GridLayoutManager(this, 2);*/
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-
-        rvContactos.setLayoutManager(llm);
-        inicializarListaContactos();
-        inicializarAdaptador();
 
 
 /*
@@ -68,18 +74,22 @@ public class MainActivity extends AppCompatActivity {
 */
 
     }
-    public ContactoAdaptador adaptador;
-    public void inicializarAdaptador(){
-        adaptador = new ContactoAdaptador(contactos, this);
-        rvContactos.setAdapter(adaptador);
+
+    private ArrayList<Fragment> agregarFragments(){
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        fragments.add(new RecyclerViewFragment());
+        fragments.add(new PerfilFragment());
+
+        return fragments;
     }
 
-    public void inicializarListaContactos(){
-        contactos = new ArrayList<Contacto>();
+    private  void setUpViewPager(){
+        viewPager.setAdapter(new PageAdapter(getSupportFragmentManager(), agregarFragments()));;
+        tabLayout.setupWithViewPager(viewPager);
 
-        contactos.add(new Contacto(R.drawable.shock_rave_bonus_icon, "Anahi Salgado", "77779999", "anahi@gmail.com"));
-        contactos.add(new Contacto(R.drawable.shock_rave_bonus_icon, "Pedro Salgado", "77779988", "pedro@gmail.com"));
-        contactos.add(new Contacto(R.drawable.shock_rave_bonus_icon, "Juan Salgado", "77779921", "juan@gmail.com"));
-        contactos.add(new Contacto(R.drawable.shock_rave_bonus_icon, "Maria Salgado", "77779911", "maria@gmail.com"));
+        tabLayout.getTabAt(0).setIcon(R.drawable.in_love);
+        tabLayout.getTabAt(1).setIcon(R.drawable.collaborator_male);
     }
+
+
 }

@@ -1,4 +1,4 @@
-package com.gilberth12.miscontactos;
+package com.gilberth12.miscontactos.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,6 +10,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.gilberth12.miscontactos.pojo.Contacto;
+import com.gilberth12.miscontactos.DetalleContacto;
+import com.gilberth12.miscontactos.R;
 
 import java.util.ArrayList;
 
